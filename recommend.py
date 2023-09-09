@@ -70,26 +70,39 @@ def run_Okt(lines):
 
 # 뭔가 다른 것을 설치하고 사용해야 함..
 def run_Mecab(lines):
-    mecab = Mecab()
+    mecab = Mecab(r'C:\mecab\mecab-ko-dic')
     File = open('result/mecab.txt', 'w', encoding='UTF-8')
+
+    start = time.time()
 
     for line in lines:
         if line != '\n':
             File.write(str(mecab.morphs(line)))
             File.write('\n')
+
+    File.write(f'실행시간 : {time.time() - start}')
     
     File.close()
 
+
+# def blankdelete(lines):
+#     File = open('new.txt', 'w', encoding='UTF-8')
+#     for line in lines:
+#         if line != '\n':
+#             File.write(line.split('\n')[0])
+#             File.write('\n')
+
+#     File.close()
 
 
 def main():
     File = open('recommend.txt' ,'r', encoding='UTF-8')
     lines = File.readlines()
+    run_Mecab(lines)
     run_hannanum(lines)
     run_Okt(lines)
     run_Kkma(lines)
     run_komoran(lines)
-    # run_Mecab(lines)
 
 
     File.close()
